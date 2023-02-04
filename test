@@ -1,0 +1,50 @@
+use web3::types::{Address, H256};
+use web3::Transport;
+
+// Connect to the Ethereum network
+let ethereum_transport = web3::transports::Http::new("https://mainnet.infura.io/v3/YOUR-PROJECT-ID").unwrap();
+let polygon_transport = web3::transports::Http::new("https://api.polygon.io/v1/").unwrap();
+let bsc_transport = web3::transports::Http::new("https://bsc-dataseed1.binance.org/").unwrap();
+
+// Define the Ethereum wallet address
+let ethereum_address = Address::from_low_u64_be(0xYourEthereumWalletAddress);
+let polygon_address = Address::from_low_u64_be(0xYourPolygonWalletAddress);
+let bsc_address = Address::from_low_u64_be(0xYourBscWalletAddress);
+
+// Get the balance of all tokens in the Ethereum wallet
+async fn get_ethereum_balances(transport: web3::transports::Http) -> Result<(), Box<dyn std::error::Error>> {
+  let web3 = web3::Web3::new(transport);
+  let balances = {};
+  for (const token of ethereum_token_contracts) {
+    let balance = await token.methods.balanceOf(ethereum_address).call();
+    balances[token.methods.symbol().call()] = balance;
+  }
+  println!("Ethereum Balances: {:?}", balances);
+  Ok(())
+}
+
+// Get the balance of all tokens in the Polygon wallet
+async fn get_polygon_balances(transport: web3::transports::Http) -> Result<(), Box<dyn std::error::Error>> {
+  let web3 = web3::Web3::new(transport);
+  let balances = {};
+  for (const token of polygon_token_contracts) {
+    let balance = await token.methods.balanceOf(polygon_address).call();
+    balances[token.methods.symbol().call()] = balance;
+  }
+  println!("Polygon Balances: {:?}", balances);
+  Ok(())
+}
+
+// Get the balance of all tokens in the Binance Smart Chain wallet
+async fn get_bsc_balances(transport: web3::transports::Http) -> Result<(), Box<dyn std::error::Error>> {
+  let web3 = web3::Web3::new(transport);
+  let balances = {};
+  for (const token of bsc_token_contracts) {
+    let balance = await token.methods.balanceOf(bsc_address).call();
+    balances[token.methods.symbol().call()] = balance;
+  }
+  println!("Binance Smart Chain Balances: {:?}", balances);
+  Ok(())
+}
+
+// Run the functions to get the balances of all tokens in the Ethereum, Polygon, and B
